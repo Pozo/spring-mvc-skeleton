@@ -1,4 +1,4 @@
-package com.epam.springmvc;
+package com.epam.springmvc.services.article.utils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -6,25 +6,12 @@ import java.io.InputStream;
 
 import javax.xml.bind.DatatypeConverter;
 
-public class ImageHelper {
-    /*
-    public static BufferedImage decodeToImage(String imageString) {
+public class ThumbnailHelper {
 
-        BufferedImage image = null;
-        byte[] imageByte;
-        try {
-            BASE64Decoder decoder = new BASE64Decoder();
-            imageByte = decoder.decodeBuffer(imageString);
-            Base64.decodeBase64()
-            image = ImageIO.read(bis);
-            bis.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return image;
-    }
-    */
     public static String encodeToString(InputStream inputStream) {
+    	if(inputStream == null) {
+    		return "";
+    	}
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         String imageString = null;
 

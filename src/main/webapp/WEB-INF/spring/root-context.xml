@@ -4,5 +4,10 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
-		
+    <bean id="concreteArticleProvider" class="com.epam.springmvc.services.article.contentproviders.ConcreteArticleProvider">
+    </bean>
+	<bean id="randomArticleProvider" class="com.epam.springmvc.services.article.contentproviders.RandomArticleProvider">
+    </bean>
+    <bean id="articleRepository" class="com.epam.springmvc.services.article.contentproviders.ArticleRepository">
+    </bean>
 </beans>

@@ -1,21 +1,27 @@
-package com.epam.springmvc;
+package com.epam.springmvc.services.article;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
-import com.epam.ubsbud.ewm.core.NotificationService;
-import com.epam.ubsbud.ewm.valueobjects.EwmNotification;
+import com.epam.springmvc.services.article.contentproviders.ConcreteArticleProvider;
 
 @Service
-public class NotificationServiceImpl implements NotificationService {
-    @Autowired
-    private NotificationProvider notificationProvider;
-    
-    @Override
-    public List<EwmNotification> getNotifications() {
-        return notificationProvider.getNotifications();
-    }
+public class BasicArticleService implements ArticleService {
+	@Autowired
+	private ApplicationContext context;
+
+	@Override
+	public List<Article> getArticles() {
+		return context.getBean(ConcreteArticleProvider.class).getArticles();
+
+	}
+
+	@Override
+	public Article getArticle(int id) {
+		return context.getBean(ConcreteArticleProvider.class).getArticle(id);
+	}
 
 }

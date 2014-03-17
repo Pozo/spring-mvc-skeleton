@@ -1,53 +1,51 @@
-package com.epam.springmvc;
+package com.epam.springmvc.services.article.contentproviders;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
-import com.epam.ubsbud.ewm.valueobjects.EwmNotification;
+import com.epam.springmvc.services.article.Article;
 
 @Component
-class RandomNotificationProvider implements NotificationProvider {
-    //private static final Logger logger = Logger.getLogger(RandomNotificationProvider.class.getName());
-    private static int index = 0;
-    
+class RandomArticleProvider implements ArticleProvider {
+    //private static final Logger logger = Logger.getLogger(RandomArticleProvider.class.getName()
+
     @Autowired
     private ApplicationContext context;
+    @Autowired
+    private ArticleRepository articleRepository;
+    private Random generator = new Random();
+    
+	private static final int ELEMENT_NUMBER = 2;
+    
     
     @Override
-    public List<EwmNotification> getNotifications() {
-        List<EwmNotification> notifications = new ArrayList<>();
+    public List<Article> getArticles() {
+    	ArrayList<Article> articles = (ArrayList<Article>) articleRepository.getArticles();
+    	
+    	ArrayList<Article> randomArticles = new ArrayList<Article>();
+    	
+    	if(ELEMENT_NUMBER > articles.size() || ELEMENT_NUMBER < 0) {
+    		throw new IllegalArgumentException("Requested random element number could not bigger than current available Articles number and could not be less than 0");
+    	}
+        for (int i = 0; i < ELEMENT_NUMBER; i++) {
+        	randomArticles.add(articles.get(generator.nextInt(articles.size())));
+		}
         
-        EwmNotification ewmNotification = new EwmNotification();
-        EwmNotification ewmNotification1 = new EwmNotification();
-        EwmNotification ewmNotification2 = new EwmNotification();
-        
-        ewmNotification.setDateTime("45 min");
-        ewmNotification.setBodyText("We have discovered an Asset Allocation Breach in your portfolio which require your attention. We have identified a trading opportunity which will correct this issue. ");
-        ewmNotification.setHighlightText("Health Issue For UBS Advice Portfolio 1");
-        ewmNotification.setThumbnail(String.format("%s%s","data:image/png;base64,", ImageHelper.encodeToString(context.getClassLoader().getResourceAsStream("MockNotificationImage.png"))));
-        
-        ewmNotification1.setDateTime("23.10.13");
-        ewmNotification1.setBodyText("Dear Heikko, you have a fairly high Apple exposure in UBS Brokerage Portfolio 2. Take a look at this trading idea.");
-        ewmNotification1.setHighlightText("Janik has a new trading idea for you. ");
-        ewmNotification1.setThumbnail(String.format("%s%s","data:image/png;base64,", ImageHelper.encodeToString(context.getClassLoader().getResourceAsStream("MockNotificationImage.png"))));
-        
-        ewmNotification2.setDateTime("23.08.13");
-        ewmNotification2.setBodyText("We have identified an opportunity within the high-tech sector which our research shows is likely to...");
-        ewmNotification2.setHighlightText("New treading idea: UBS Brokerage Protfolio 3");
-        ewmNotification2.setThumbnail(String.format("%s%s","data:image/png;base64,", ImageHelper.encodeToString(context.getClassLoader().getResourceAsStream("MockNotificationImage.png"))));
-        
-        EwmNotification[] notificationsArray = new EwmNotification[]{ewmNotification,ewmNotification1,ewmNotification2};
-        
-        notifications.add(notificationsArray[index]);
-        
-        if(index < notificationsArray.length-1){
-            index++;   
-        }
-        
-        return notifications;
+        return randomArticles;
     }
+
+	@Override
+	public Article getArticle(int id) {
+		ArrayList<Article> articles = (ArrayList<Article>) articleRepository.getArticles();
+		
+		if(id < articles.size()) {
+			return articles.get(id);
+		}
+		throw new IllegalArgumentException("Illegal article ID number");
+	}
 }

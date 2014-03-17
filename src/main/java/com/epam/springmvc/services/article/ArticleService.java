@@ -1,9 +1,8 @@
-package com.epam.springmvc;
+package com.epam.springmvc.services.article;
 
 import java.util.List;
 
-import com.epam.ubsbud.ewm.valueobjects.EwmNotification;
-
-public interface NotificationService {
-    public List<EwmNotification> getNotifications();
+public interface ArticleService {
+    public List<Article> getArticles();
+    public Article getArticle(int id);
 }
