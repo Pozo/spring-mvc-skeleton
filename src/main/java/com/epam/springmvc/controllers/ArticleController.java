@@ -21,7 +21,7 @@ import com.epam.springmvc.services.article.ArticleService;
  * Handles requests for the application home page.
  */
 @Controller
-@RequestMapping()
+@RequestMapping("/articles")
 public class ArticleController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(ArticleController.class);
@@ -31,13 +31,13 @@ public class ArticleController {
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
-    @RequestMapping(value = "/articles/{id}", method=RequestMethod.GET, produces="application/json")
+    @RequestMapping(value = "/{id}", method=RequestMethod.GET, produces="application/json")
     @ResponseBody
 	public Article getArticle(@PathVariable("id") int id) {		
 	
 		return articleService.getArticle(id);
 	}
-    @RequestMapping(value = "/articles",method=RequestMethod.GET, produces="application/json")
+    @RequestMapping(value = "/",method=RequestMethod.GET, produces="application/json")
     @ResponseBody
 	public List<Article> getArticles() {		
 	
