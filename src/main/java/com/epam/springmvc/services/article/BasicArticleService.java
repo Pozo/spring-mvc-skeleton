@@ -7,6 +7,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import com.epam.springmvc.services.article.contentproviders.ConcreteArticleProvider;
+import com.epam.springmvc.services.article.contentproviders.RandomArticleProvider;
 
 @Service
 public class BasicArticleService implements ArticleService {
@@ -15,13 +16,13 @@ public class BasicArticleService implements ArticleService {
 
 	@Override
 	public List<Article> getArticles() {
-		return context.getBean(ConcreteArticleProvider.class).getArticles();
+		return context.getBean(RandomArticleProvider.class).getArticles();
 
 	}
 
 	@Override
 	public Article getArticle(int id) {
-		return context.getBean(ConcreteArticleProvider.class).getArticle(id);
+		return context.getBean(RandomArticleProvider.class).getArticle(id);
 	}
 
 }

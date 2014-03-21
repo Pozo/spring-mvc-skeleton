@@ -1,7 +1,11 @@
 package com.epam.springmvc.controllers;
 
+import java.io.IOException;
 import java.util.List;
 
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +41,7 @@ public class ArticleController {
 	
 		return articleService.getArticle(id);
 	}
-    @RequestMapping(value = "/",method=RequestMethod.GET, produces="application/json")
+    @RequestMapping(value = "",method=RequestMethod.GET, produces="application/json")
     @ResponseBody
 	public List<Article> getArticles() {		
 	
@@ -47,6 +51,20 @@ public class ArticleController {
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
 	public String processSystemError(Exception exception) {
-		return exception.getMessage();
+		String retval = "";
+		try {
+			ObjectMapper mapper = new ObjectMapper();
+			retval = mapper.writeValueAsString(exception);
+		} catch (JsonGenerationException e) {
+			
+			logger.error(e.getMessage());
+		} catch (JsonMappingException e) {
+
+			logger.error(e.getMessage());
+		} catch (IOException e) {
+
+			logger.error(e.getMessage());
+		}
+		return retval;
 	}
 }

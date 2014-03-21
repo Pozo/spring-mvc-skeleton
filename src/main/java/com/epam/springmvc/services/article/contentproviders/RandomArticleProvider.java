@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import com.epam.springmvc.services.article.Article;
 
 @Component
-class RandomArticleProvider implements ArticleProvider {
+public class RandomArticleProvider implements ArticleProvider {
     //private static final Logger logger = Logger.getLogger(RandomArticleProvider.class.getName()
 
     @Autowired
